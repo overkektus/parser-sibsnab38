@@ -1,9 +1,17 @@
-var request = require('request');
+const tress = require('tress');
+const needle = require('needle');
+const cheerio = require('cheerio');
+const fs = require('fs');
 
-var URL = 'https://sibsnab38.ru/category';
+const URL = 'https://sibsnab38.ru/category';
 
-request(URL, function(err, res, body) {
-    if (err) throw err;
-    console.log(body);
-    console.log(res.statusCode);
+let results = [];
+
+let q = tress((url, callback) => {
+    needle.get(url, (err, res) => {
+        if (err) throw err;
+
+        let $ = cheerio.load(res.body);
+
+    });
 });
