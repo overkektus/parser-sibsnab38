@@ -1,10 +1,13 @@
 const tress = require('tress');
 const needle = require('needle');
 const cheerio = require('cheerio');
+const chalk = require('chalk');
 const resolve = require('url').resolve;
 const fs = require('fs');
 
 const URL = 'https://sibsnab38.ru/category/';
+
+const startTime = new Date();
 
 let urls = [];
 
@@ -16,7 +19,6 @@ let q = tress((url, callback) => {
 
         $('.caption > h4 > a').each(function(i, elem) {
             urls.push(resolve(URL, $(this).attr('href')));
-            console.log(i);
         });
 
 
@@ -79,8 +81,26 @@ let qt = tress((url, callback) => {
         results.push(item);
         callback();
     });
-}, 12);
+}, 4);
+
+function convertTime(time) {
+    let seconds = time / 1000;
+    let minutes;
+    if (seconds % 60 === 0) {
+        minutes = seconds / 60;
+        seconds = 0;
+    } else {
+        minutes = Math.floor(seconds / 60);
+        seconds = Math.round(seconds - (60 * minutes));
+    }
+
+    return minutes + ':' + seconds;
+}
 
 qt.drain = () => {
-    console.log(results);
+    const endTime = new Date();
+
+    console.log(chalk.red('Parse done! '));
+    console.log(chalk.blue('operating time:'), chalk.yellow(convertTime(endTime - startTime)));
+    console.log(chalk.blue('found items:'), chalk.yellow(results.length));
 };
