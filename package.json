@@ -11,6 +11,7 @@
   "license": "ISC",
   "devDependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "iconv-lite": "^0.4.19",
     "needle": "^2.0.1",
     "request": "^2.81.0",
     "tress": "^1.0.4"
